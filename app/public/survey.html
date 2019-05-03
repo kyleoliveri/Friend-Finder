@@ -35,10 +35,25 @@
         <div class="row">
             <div class="col s9 m10 l12 grey lighten-4">
                 <div class="card-content black-text">
-                    <h2 class="center section">Survey</h2>
-                    <hr>
+                   
+                    <h2 class="center">About You</h2>
+
+						<div class="input-field col s6">
+							<h5>Name (Required)</h5>
+							<input type="text" class="validate" placeholder="Your Name Here" id="userName">
+						</div>
+
+						<div class="input-field col s6">
+							<h5>Profile Image (Required)</h5>
+							<input type="text" class="validate" placeholder="Photo Link Here" id="userPhoto">
+						</div>   
+                        <hr>
+
+                        <h2 class="center section">Survey</h2>
+                        <hr>
+
                     <p>1. Dogs are better than cats.</p>
-                    <div class="input-field col s12">
+                    <div id="question1" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -50,7 +65,7 @@
                     </div>
                     <br>
                     <p>2. It is better for children to grow up in the countryside than a big city.</p>
-                    <div class="input-field col s12">
+                    <div id="question2" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -62,7 +77,7 @@
                     </div>
                     <br>
                     <p>3. Playing a game is only fun when you win.</p>
-                    <div class="input-field col s12">
+                    <div id="question3" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -74,7 +89,7 @@
                     </div>
                     <br>
                     <p>4. It is okay to lie.</p>
-                    <div class="input-field col s12">
+                    <div id="question4" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -86,7 +101,7 @@
                     </div>
                     <br>
                     <p>5. Summer is the best season of the year.</p>
-                    <div class="input-field col s12">
+                    <div id="question5" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -98,7 +113,7 @@
                     </div>
                     <br>
                     <p>6. Parents are the best teachers.</p>
-                    <div class="input-field col s12">
+                    <div id="question6" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -110,7 +125,7 @@
                     </div>
                     <br>
                     <p>7. It does not matter whether you enjoy your job or not as long as it's a well-paid job.</p>
-                    <div class="input-field col s12">
+                    <div id="question7" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -122,7 +137,7 @@
                     </div>
                     <br>
                     <p>8. Decisions that people make quickly are always wrong.</p>
-                    <div class="input-field col s12">
+                    <div id="question8" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -134,7 +149,7 @@
                     </div>
                     <br>
                     <p>9. The night is better than the day.</p>
-                    <div class="input-field col s12">
+                    <div id="question9" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -146,7 +161,7 @@
                     </div>
                     <br>
                     <p>10. Internet is better than TV.</p>
-                    <div class="input-field col s12">
+                    <div id="question10" class="input-field col s12">
                         <select>
                             <option value="" disabled selected>Agree or Disagree?</option>
                             <option value="1">1 (Strongly Disagree)</option>
@@ -163,6 +178,18 @@
         </div>
     </div>
 
+    <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Closest Friend Match</h4>
+                <div class="divider"></div>
+                <h5 id="userMatch"></h5>
+                <img id="userMatchImage" class="materialboxed" width="650" src="">
+            </div>
+            <div class="modal-footer">
+                <a href="/survey" class="modal-action modal-close waves-effect waves-green btn-flat">Fill Again!</a>
+            </div>
+        </div>
+
     <script src="http://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
         crossorigin="anonymous">
         </script>
@@ -170,10 +197,49 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script>
+    
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$('select').material_select();
+			$('.modal').modal({
+				dismissible: false,
+				opacity: .5,
+				inDuration: 300,
+				outDuration: 200,
+				startingTop: '4%',
+				endingTop: '10%'
+			});
+		});
+    
         $(document).ready(function () {
             $('select').formSelect();
         });
+
+        $('#submitSurvey').on('click', function(event) {
+			event.preventDefault();
+			var userInput = {
+				name: $('#userName').val().trim(),
+				photo: $('#userPhoto').val().trim(),
+				scores:[
+					$('#question1').val().trim(),
+					$('#question2').val().trim(),
+					$('#question3').val().trim(),
+					$('#question4').val().trim(),
+					$('#question5').val().trim(),
+					$('#question6').val().trim(),
+					$('#question7').val().trim(),
+					$('#question8').val().trim(),
+					$('#question9').val().trim(),
+					$('#question10').val().trim()
+				]
+            };
+            $.post('/api/friends', userInput)
+      		.done(function(data) {
+      			$('#userMatch').html(data.matchName);
+		    	$("#userMatchImage").attr("src", data.matchImage);
+      			$('#modal1').modal('open');
+      		});
+		});
     </script>
 
     <script src="/server.js"></script>
